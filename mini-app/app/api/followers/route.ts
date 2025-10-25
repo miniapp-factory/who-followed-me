@@ -1,5 +1,15 @@
 import { NextResponse } from "next/server";
 
+interface Follower {
+  username: string;
+  pfp_url: string;
+  timestamp: number;
+}
+
+interface FollowersResponse {
+  followers: Follower[];
+}
+
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const fid = url.searchParams.get("fid");
@@ -36,14 +46,13 @@ export async function GET(request: Request) {
       );
     }
 
-    const data = await res.json();
+    const data: FollowersResponse = await res.json();
 
-    // The Neynar API returns an array of followers in data.followers
-    const followers = data.followers?.map((f: any) => ({
+    const followers = data.followers.map((f) => ({
       username: f.username,
       pfp_url: f.pfp_url,
       timestamp: f.timestamp,
-    })) ?? [];
+    }));
 
     return NextResponse.json({ followers });
   } catch (err: any) {

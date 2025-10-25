@@ -12,14 +12,8 @@ export async function POST(request: Request) {
     );
   }
 
-  // Fetch followers from our internal API route
-  const origin = request.nextUrl.origin;
-  const followersRes = await fetch(`${origin}/api/followers?fid=${fid}`);
-  const followersData = await followersRes.json();
-
-  const followers = followersData.followers ?? [];
-
   // Build the frame response
+  const origin = request.nextUrl.origin;
   const frameResponse = {
     "fc:frame": "vNext",
     "image": {
