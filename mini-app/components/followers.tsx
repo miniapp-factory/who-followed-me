@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState, useContext } from "react";
-import { MiniAppContext } from "@/components/context/miniapp-provider";
+import { useMiniAppContext } from "@/components/context/miniapp-provider";
 
 export function Followers() {
-  const { sdk } = useContext(MiniAppContext);
-  const [followers, setFollowers] = useState<any[]>([]);
+  const { sdk } = useMiniAppContext();
+  const [followers, setFollowers] = useState<unknown[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -14,8 +14,8 @@ export function Followers() {
       try {
         // Assuming the SDK provides a method to fetch followers.
         // Replace `getFollowers` with the actual method name if different.
-        const data = await sdk.getFollowers({ limit: 10 });
-        setFollowers(data);
+        const data = await (sdk as any).getFollowers({ limit: 10 });
+        setFollowers(data as unknown[]);
       } catch (e) {
         console.error("Failed to fetch followers:", e);
       } finally {
@@ -41,7 +41,7 @@ export function Followers() {
 
   return (
     <div className="space-y-4">
-      {followers.map((follower, i) => (
+      {followers.map((follower: any, i) => (
         <div key={i} className="flex items-center gap-4 p-4 border rounded-md">
           {follower.avatarUrl ? (
             <img
