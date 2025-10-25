@@ -55,9 +55,11 @@ export async function GET(request: Request) {
     }));
 
     return NextResponse.json({ followers });
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const message =
+      err instanceof Error ? err.message : String(err);
     return NextResponse.json(
-      { error: err.message ?? "Unknown error" },
+      { error: message ?? "Unknown error" },
       { status: 500 }
     );
   }
