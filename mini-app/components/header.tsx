@@ -30,6 +30,10 @@ const pages = [
     ),
     href: "/",
   },
+  {
+    label: <span className="text-xl">Followers</span>,
+    href: "/followers",
+  },
 ];
 
 export function Header() {
